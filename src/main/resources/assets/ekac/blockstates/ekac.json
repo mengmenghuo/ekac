@@ -1,0 +1,11 @@
+{
+  "variants": {
+    "bites=0": { "model": "ekac:block/ekac" },
+    "bites=1": { "model": "ekac:block/ekac_slice1" },
+    "bites=2": { "model": "ekac:block/ekac_slice2" },
+    "bites=3": { "model": "ekac:block/ekac_slice3" },
+    "bites=4": { "model": "ekac:block/ekac_slice4" },
+    "bites=5": { "model": "ekac:block/ekac_slice5" },
+    "bites=6": { "model": "ekac:block/ekac_slice6" }
+  }
+}

@@ -72,21 +72,18 @@ public class EkaCBlock extends Block {
         return eat(level, pos, state, player);
     }
 
+    // 糕蛋扣除饱食度，与普通食物相反，饱食度满时也能吃
     protected static InteractionResult eat(LevelAccessor level, BlockPos pos, BlockState state, Player player) {
-        if (!player.canEat(false)) {
-            return InteractionResult.PASS;
+        player.awardStat(Stats.EAT_CAKE_SLICE);
+        player.getFoodData().eat(-2, 0.0F);
+        int bites = state.getValue(BITES);
+        level.gameEvent(player, GameEvent.EAT, pos);
+        if (bites < 6) {
+            level.setBlock(pos, state.setValue(BITES, bites + 1), 3);
         } else {
-            player.awardStat(Stats.EAT_CAKE_SLICE);
-            player.getFoodData().eat(-2, 0.0F);
-            int bites = state.getValue(BITES);
-            level.gameEvent(player, GameEvent.EAT, pos);
-            if (bites < 6) {
-                level.setBlock(pos, state.setValue(BITES, bites + 1), 3);
-            } else {
-                level.removeBlock(pos, false);
-                level.gameEvent(player, GameEvent.BLOCK_DESTROY, pos);
-            }
-            return InteractionResult.SUCCESS;
+            level.removeBlock(pos, false);
+            level.gameEvent(player, GameEvent.BLOCK_DESTROY, pos);
         }
+        return InteractionResult.SUCCESS;
     }
 }
